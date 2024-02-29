@@ -1,11 +1,29 @@
 import React from 'react';
-import RegForm from './components/RegForm';
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import Register from './pages/Register';
+import Login from './pages/Login';
+
+const router = createBrowserRouter([
+  {
+    path: "/register",
+    element: <Register />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/",
+    element: <Login />,
+  },
+]);
 
 function App() {
   return (
-    <div className="App">
-      <RegForm></RegForm>
-    </div>
+    <RouterProvider router={router} />
   );
 }
 

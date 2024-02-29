@@ -17,7 +17,7 @@ const RegForm = () => {
             <MyInput value={firstname} onChange={e => setFirstname(e.target.value)} type="text" placeholder="Vorname..."></MyInput>
             <MyInput value={surname} onChange={e => setSurname(e.target.value)} type="text" placeholder="Nachname..."></MyInput>
             <MyInput value={email} onChange={e => setEmail(e.target.value)} type="email" placeholder="E-Mail..."></MyInput>
-            <MyButton>COMPONENT</MyButton>
+            <MyButton>Registrieren</MyButton>
         </form>
     );
 };
