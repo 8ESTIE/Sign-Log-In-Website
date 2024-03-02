@@ -29,13 +29,8 @@ app.post('/api/login', async (req, res) => {
 
         const existingUser = await User.findOne({ username });
 
-        if (!existingUser) {
-            return res.status(400).json({ error: 'User not found' });
-        }
-
-        const isPasswordValid = existingUser.password === password;
-        if (!isPasswordValid) {
-            return res.status(400).json({ error: 'Password incorrect' });
+        if (!existingUser || existingUser.password !== password) {
+            return res.status(400).json({ error: 'Username or password is incorrect' });
         }
         
         return res.status(200).json({ message: 'User logged in successfully' });
@@ -46,6 +41,27 @@ app.post('/api/login', async (req, res) => {
 });
 
 app.post('/api/register', async (req, res) => {
+    try {
+        const { username, password, firstname, surname, email } = req.body;
+
+        const existingUser = await User.findOne({ username });
+
+        if (existingUser) {
+            return res.status(400).json({ error: 'Username already exists. Try to login instead' });
+        }
+        
+        const newUser = new User({ username, password, firstname, surname, email });
+
+        await newUser.save();
+
+        return res.status(200).json({ message: 'Registration successfull' });
+    } catch (error) {
+        console.error('Error registering in:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+app.get('/api/getName', async (req, res) => {
     try {
         const { username, password, firstname, surname, email } = req.body;
 
